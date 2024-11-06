@@ -1,7 +1,9 @@
 export declare class CreatePropertyDto {
-    ownerId: string;
     title: string;
     description: string;
+    street: string;
+    number: number;
+    postalCode: string;
     state: string;
     city: string;
     price: number;
@@ -9,7 +11,6 @@ export declare class CreatePropertyDto {
     capacity: number;
     bedrooms: number;
     bathrooms: number;
-    photos: string[];
-    latitude?: string;
-    longitude?: string;
+    latitude?: number;
+    longitude?: number;
 }

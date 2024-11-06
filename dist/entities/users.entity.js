@@ -31,7 +31,7 @@ __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'User id',
         format: 'uuid',
-        example: '550e8400-e29b-41d4-a716-446655440000'
+        example: '550e8400-e29b-41d4-a716-446655440000',
     }),
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);

@@ -30,8 +30,13 @@ let AuthController = class AuthController {
         const { email, password } = login;
         return this.authService.login(email, password);
     }
-    async signinWithGoogle() {
-        return { url: 'https://accounts.google.com/o/oauth2/auth?...' };
+    async signinWithGoogle(body) {
+        const { access_token } = body;
+        const googleResponse = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${access_token}`);
+        const googleUser = await googleResponse.json();
+        if (googleUser.error) {
+            throw new Error('Token inválido');
+        }
     }
     async googleOAuthredirect(req, res) {
         this.authService.googleAuthRedirect(req.user, res);
@@ -58,10 +63,11 @@ __decorate([
 ], AuthController.prototype, "login", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Login Google' }),
-    (0, common_1.Post)('oauth/google'),
+    (0, common_1.Post)('auth/google'),
     openapi.ApiResponse({ status: 201 }),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signinWithGoogle", null);
 __decorate([

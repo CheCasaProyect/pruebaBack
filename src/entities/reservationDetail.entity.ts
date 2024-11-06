@@ -6,14 +6,14 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Property } from './property.entity';
-import { Reservation } from './reservation.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Reservation } from './reservation.entity';
 
 @Entity({
   name: `reservations_details`,
 })
 export class ReservationDetail {
-  @PrimaryGeneratedColumn(`uuid`)
+  @PrimaryGeneratedColumn('uuid')
   @ApiProperty()
   id: string;
 
@@ -24,7 +24,7 @@ export class ReservationDetail {
   )
   @JoinColumn({ name: `reservation_id` })
   @ApiProperty()
-  reservation: Reservation; //Se relaciona con la reserva hecha.
+  reservation: Reservation;
 
   @Column({
     type: 'date',

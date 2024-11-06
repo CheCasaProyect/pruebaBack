@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { error } from 'console';
 import { CarpiBotDto } from 'src/dtos/carpiBotDto';
 import { CarpiBot } from 'src/entities/carpiBot.entity';
 import { User } from 'src/entities/users.entity';

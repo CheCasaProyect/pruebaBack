@@ -13,8 +13,8 @@ exports.Reservation = void 0;
 const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 const users_entity_1 = require("./users.entity");
-const reservationDetail_entity_1 = require("./reservationDetail.entity");
 const swagger_1 = require("@nestjs/swagger");
+const reservationDetail_entity_1 = require("./reservationDetail.entity");
 let Reservation = class Reservation {
     static _OPENAPI_METADATA_FACTORY() {
         return { id: { required: true, type: () => String }, user: { required: true, type: () => require("./users.entity").User }, requestedAt: { required: true, type: () => Date }, totalPrice: { required: true, type: () => Number }, active: { required: true, type: () => Boolean }, reservationDetails: { required: true, type: () => require("./reservationDetail.entity").ReservationDetail } };
@@ -22,13 +22,13 @@ let Reservation = class Reservation {
 };
 exports.Reservation = Reservation;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(`uuid`),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], Reservation.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => users_entity_1.User, (user) => user.reservations),
-    (0, typeorm_1.JoinColumn)({ name: `user_id` }),
+    (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", users_entity_1.User)
 ], Reservation.prototype, "user", void 0);

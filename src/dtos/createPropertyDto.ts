@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsInt,
@@ -9,12 +10,8 @@ import {
 
 export class CreatePropertyDto {
   @ApiProperty({
-    description: 'Property title',
-    example: 'Cabaña',
+    description: `Property title`,
   })
-  @IsString()
-  ownerId: string;
-
   @IsNotEmpty()
   @IsString()
   title: string;
@@ -29,6 +26,21 @@ export class CreatePropertyDto {
   @ApiProperty({
     description: 'Property state',
   })
+  @IsNotEmpty()
+  @IsString()
+  street: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  @Type(() => Number)
+  number: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  postalCode: string;
+
   @IsNotEmpty()
   @IsString()
   state: string;
@@ -46,6 +58,7 @@ export class CreatePropertyDto {
   })
   @IsNotEmpty()
   @IsNumber({ maxDecimalPlaces: 2 })
+  @Type(() => Number)
   price: number;
 
   @ApiProperty({
@@ -54,32 +67,32 @@ export class CreatePropertyDto {
   })
   @IsNotEmpty()
   @IsBoolean()
+  @Type(() => Boolean)
   isAvailable: boolean;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsInt()
+  @Type(() => Number)
   capacity: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsInt()
+  @Type(() => Number)
   bedrooms: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsInt()
+  @Type(() => Number)
   bathrooms: number;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  photos: string[];
+  @ApiProperty({ required: false })
+  @Type(() => Number)
+  latitude?: number;
 
-  @ApiProperty()
-  @IsString()
-  latitude?: string;
-
-  @ApiProperty()
-  @IsString()
-  longitude?: string;
+  @ApiProperty({ required: false })
+  @Type(() => Number)
+  longitude?: number;
 }

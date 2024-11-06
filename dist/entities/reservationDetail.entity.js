@@ -13,8 +13,8 @@ exports.ReservationDetail = void 0;
 const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 const property_entity_1 = require("./property.entity");
-const reservation_entity_1 = require("./reservation.entity");
 const swagger_1 = require("@nestjs/swagger");
+const reservation_entity_1 = require("./reservation.entity");
 let ReservationDetail = class ReservationDetail {
     static _OPENAPI_METADATA_FACTORY() {
         return { id: { required: true, type: () => String }, reservation: { required: true, type: () => require("./reservation.entity").Reservation }, checkIn: { required: true, type: () => Date }, checkOut: { required: true, type: () => Date }, pax: { required: true, type: () => Number }, property: { required: true, type: () => require("./property.entity").Property } };
@@ -22,7 +22,7 @@ let ReservationDetail = class ReservationDetail {
 };
 exports.ReservationDetail = ReservationDetail;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(`uuid`),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], ReservationDetail.prototype, "id", void 0);

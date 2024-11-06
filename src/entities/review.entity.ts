@@ -13,7 +13,7 @@ import { ApiProperty } from '@nestjs/swagger';
   name: `reviews`,
 })
 export class Review {
-  @PrimaryGeneratedColumn(`uuid`)
+  @PrimaryGeneratedColumn('uuid')
   @ApiProperty()
   id: string;
 

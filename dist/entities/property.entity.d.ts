@@ -7,6 +7,9 @@ export declare class Property {
     active: boolean;
     title: string;
     description: string;
+    street: string;
+    number: number;
+    postalCode: string;
     state: string;
     city: string;
     price: number;
@@ -17,8 +20,8 @@ export declare class Property {
     photos: string[];
     stripeProductId: string;
     stripePriceId: string;
-    latitude?: string;
-    longitude?: string;
+    latitude?: number;
+    longitude?: number;
     reviews: Review[];
     reservationDetail: ReservationDetail;
 }

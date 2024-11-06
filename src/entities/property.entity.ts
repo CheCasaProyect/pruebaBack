@@ -11,12 +11,13 @@ import { User } from './users.entity';
 import { Review } from './review.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { ReservationDetail } from './reservationDetail.entity';
+import { v4 as uuid } from 'uuid'
 
 @Entity({
-  name: `properties`,
+  name: "properties",
 })
 export class Property {
-  @PrimaryGeneratedColumn(`uuid`)
+  @PrimaryGeneratedColumn('uuid')
   @ApiProperty({
     description: 'Property id',
     format: 'uuid',
@@ -25,9 +26,9 @@ export class Property {
   id: string;
 
   @ManyToOne(() => User, (user) => user.properties)
-  @JoinColumn({ name: `owner_id` })
+  @JoinColumn({ name: "owner_id" })
   @ApiProperty()
-  owner: User; //Se relaciona el dueño de la propiedad.
+  owner: User;
 
   @Column({ default: true })
   @ApiProperty()
@@ -50,7 +51,25 @@ export class Property {
   @Column({
     type: 'varchar',
     length: 50,
-    nullable: true,
+  })
+  @ApiProperty()
+  street: string;
+@Column({
+    type: 'int',
+  })
+  @ApiProperty()
+  number: number;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+  })
+  @ApiProperty()
+  postalCode: string;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
   })
   @ApiProperty()
   state: string;
@@ -58,7 +77,6 @@ export class Property {
   @Column({
     type: 'varchar',
     length: 50,
-    nullable: true,
   })
   @ApiProperty()
   city: string;
@@ -72,27 +90,24 @@ export class Property {
   price: number;
 
   @Column({
-    type: 'integer',
-    nullable: true,
+    type: 'int',
   })
   @ApiProperty()
   bedrooms: number;
 
   @Column({
-    type: 'integer',
-    nullable: true,
+    type: 'int',
   })
   @ApiProperty()
   bathrooms: number;
-
-  @Column({
+@Column({
     type: 'boolean',
     default: true,
   })
   @ApiProperty()
-  isAvailable: boolean; //aquí el tipo boolean es para tener una referencia, pero se podría poner otra cosa para ver para qué fecha vuelve a estar disponible.
+  isAvailable: boolean;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'int' })
   @ApiProperty()
   capacity: number;
 
@@ -112,12 +127,16 @@ export class Property {
   stripePriceId: string;
 
   @ApiProperty()
-  @Column({ nullable: true })
-  latitude?: string;
+  @Column({
+    type: 'decimal',
+  })
+  latitude?: number;
 
   @ApiProperty()
-  @Column({ nullable: true })
-  longitude?: string;
+  @Column({
+    type: 'decimal',
+  })
+  longitude?: number;
 
   @OneToMany(() => Review, (review) => review.property, {
     cascade: true,

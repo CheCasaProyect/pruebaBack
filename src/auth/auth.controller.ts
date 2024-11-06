@@ -35,10 +35,23 @@ export class AuthController {
   // }
 
   
-  @ApiOperation({summary: 'Login Google'})
-  @Post('oauth/google')
-  async signinWithGoogle() {
-    return { url: 'https://accounts.google.com/o/oauth2/auth?...' };
+  // @ApiOperation({summary: 'Login Google'})
+  // @Post('oauth/google')
+  // async signinWithGoogle() {
+  //   return { url: 'https://accounts.google.com/o/oauth2/auth?...' };
+  // }
+
+  @ApiOperation({ summary: 'Login Google' })
+  @Post('auth/google')
+  async signinWithGoogle(@Body() body: { access_token: string }) {
+    const { access_token } = body;
+
+    const googleResponse = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${access_token}`);
+    const googleUser = await googleResponse.json();
+
+    if (googleUser.error) {
+      throw new Error('Token inválido');
+    }
   }
 
  

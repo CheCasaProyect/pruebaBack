@@ -22,7 +22,7 @@ let Review = class Review {
 };
 exports.Review = Review;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(`uuid`),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], Review.prototype, "id", void 0);

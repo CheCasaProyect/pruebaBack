@@ -7,19 +7,19 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './users.entity';
-import { ReservationDetail } from './reservationDetail.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { ReservationDetail } from './reservationDetail.entity';
 
 @Entity({
   name: `reservations`,
 })
 export class Reservation {
-  @PrimaryGeneratedColumn(`uuid`)
+  @PrimaryGeneratedColumn('uuid')
   @ApiProperty()
   id: string;
 
   @ManyToOne(() => User, (user) => user.reservations)
-  @JoinColumn({ name: `user_id` })
+  @JoinColumn({ name: 'user_id' })
   @ApiProperty()
   user: User;
 

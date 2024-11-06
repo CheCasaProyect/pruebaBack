@@ -18,12 +18,12 @@ const swagger_1 = require("@nestjs/swagger");
 const reservationDetail_entity_1 = require("./reservationDetail.entity");
 let Property = class Property {
     static _OPENAPI_METADATA_FACTORY() {
-        return { id: { required: true, type: () => String }, owner: { required: true, type: () => require("./users.entity").User }, active: { required: true, type: () => Boolean }, title: { required: true, type: () => String }, description: { required: true, type: () => String }, state: { required: true, type: () => String }, city: { required: true, type: () => String }, price: { required: true, type: () => Number }, bedrooms: { required: true, type: () => Number }, bathrooms: { required: true, type: () => Number }, isAvailable: { required: true, type: () => Boolean }, capacity: { required: true, type: () => Number }, photos: { required: true, type: () => [String] }, stripeProductId: { required: true, type: () => String }, stripePriceId: { required: true, type: () => String }, latitude: { required: false, type: () => String }, longitude: { required: false, type: () => String }, reviews: { required: true, type: () => [require("./review.entity").Review] }, reservationDetail: { required: true, type: () => require("./reservationDetail.entity").ReservationDetail } };
+        return { id: { required: true, type: () => String }, owner: { required: true, type: () => require("./users.entity").User }, active: { required: true, type: () => Boolean }, title: { required: true, type: () => String }, description: { required: true, type: () => String }, street: { required: true, type: () => String }, number: { required: true, type: () => Number }, postalCode: { required: true, type: () => String }, state: { required: true, type: () => String }, city: { required: true, type: () => String }, price: { required: true, type: () => Number }, bedrooms: { required: true, type: () => Number }, bathrooms: { required: true, type: () => Number }, isAvailable: { required: true, type: () => Boolean }, capacity: { required: true, type: () => Number }, photos: { required: true, type: () => [String] }, stripeProductId: { required: true, type: () => String }, stripePriceId: { required: true, type: () => String }, latitude: { required: false, type: () => Number }, longitude: { required: false, type: () => Number }, reviews: { required: true, type: () => [require("./review.entity").Review] }, reservationDetail: { required: true, type: () => require("./reservationDetail.entity").ReservationDetail } };
     }
 };
 exports.Property = Property;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(`uuid`),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     (0, swagger_1.ApiProperty)({
         description: 'Property id',
         format: 'uuid',
@@ -33,7 +33,7 @@ __decorate([
 ], Property.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => users_entity_1.User, (user) => user.properties),
-    (0, typeorm_1.JoinColumn)({ name: `owner_id` }),
+    (0, typeorm_1.JoinColumn)({ name: "owner_id" }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", users_entity_1.User)
 ], Property.prototype, "owner", void 0);
@@ -62,7 +62,29 @@ __decorate([
     (0, typeorm_1.Column)({
         type: 'varchar',
         length: 50,
-        nullable: true,
+    }),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], Property.prototype, "street", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'int',
+    }),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], Property.prototype, "number", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'varchar',
+        length: 50,
+    }),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], Property.prototype, "postalCode", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'varchar',
+        length: 50,
     }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
@@ -71,7 +93,6 @@ __decorate([
     (0, typeorm_1.Column)({
         type: 'varchar',
         length: 50,
-        nullable: true,
     }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
@@ -87,16 +108,14 @@ __decorate([
 ], Property.prototype, "price", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'integer',
-        nullable: true,
+        type: 'int',
     }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], Property.prototype, "bedrooms", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'integer',
-        nullable: true,
+        type: 'int',
     }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
@@ -110,7 +129,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Property.prototype, "isAvailable", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'integer' }),
+    (0, typeorm_1.Column)({ type: 'int' }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], Property.prototype, "capacity", void 0);
@@ -134,13 +153,17 @@ __decorate([
 ], Property.prototype, "stripePriceId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({
+        type: 'decimal',
+    }),
+    __metadata("design:type", Number)
 ], Property.prototype, "latitude", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({
+        type: 'decimal',
+    }),
+    __metadata("design:type", Number)
 ], Property.prototype, "longitude", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => review_entity_1.Review, (review) => review.property, {
@@ -157,7 +180,7 @@ __decorate([
 ], Property.prototype, "reservationDetail", void 0);
 exports.Property = Property = __decorate([
     (0, typeorm_1.Entity)({
-        name: `properties`,
+        name: "properties",
     })
 ], Property);
 //# sourceMappingURL=property.entity.js.map
