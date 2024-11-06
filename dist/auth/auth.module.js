@@ -15,7 +15,6 @@ const typeorm_1 = require("@nestjs/typeorm");
 const users_entity_1 = require("../entities/users.entity");
 const reservations_module_1 = require("../reservations/reservations.module");
 const property_module_1 = require("../property/property.module");
-const passport_1 = require("@nestjs/passport");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -25,10 +24,6 @@ exports.AuthModule = AuthModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([users_entity_1.User]),
             reservations_module_1.ReservationsModule,
             property_module_1.PropertyModule,
-            passport_1.PassportModule.register({
-                defaultStrategy: 'google',
-                session: false,
-            }),
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService, user_repository_1.UserRepository],

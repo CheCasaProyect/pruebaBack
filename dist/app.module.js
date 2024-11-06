@@ -26,6 +26,7 @@ const stripe_module_1 = require("./stripe/stripe.module");
 const reviews_module_1 = require("./reviews/reviews.module");
 const carpibot_module_1 = require("./chatbot/carpibot.module");
 const jwt_1 = require("@nestjs/jwt");
+const google_module_1 = require("./google/google.module");
 let AppModule = class AppModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
@@ -53,13 +54,14 @@ exports.AppModule = AppModule = __decorate([
             stripe_module_1.StripeModule,
             reviews_module_1.ReviewsModule,
             carpibot_module_1.CarpiBotModule,
+            google_module_1.GoogleModule,
             jwt_1.JwtModule.register({
                 global: true,
                 secret: process.env.JWT_KEY_SECRET,
                 signOptions: {
                     expiresIn: '1h',
                 }
-            })
+            }),
         ],
         controllers: [],
         providers: [],

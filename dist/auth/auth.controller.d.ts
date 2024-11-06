@@ -9,8 +9,4 @@ export declare class AuthController {
         message: string;
         token: string;
     }>;
-    signinWithGoogle(body: {
-        access_token: string;
-    }): Promise<void>;
-    googleOAuthredirect(req: any, res: any): Promise<void>;
 }

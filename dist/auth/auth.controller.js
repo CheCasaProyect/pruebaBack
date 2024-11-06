@@ -30,17 +30,6 @@ let AuthController = class AuthController {
         const { email, password } = login;
         return this.authService.login(email, password);
     }
-    async signinWithGoogle(body) {
-        const { access_token } = body;
-        const googleResponse = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${access_token}`);
-        const googleUser = await googleResponse.json();
-        if (googleUser.error) {
-            throw new Error('Token inválido');
-        }
-    }
-    async googleOAuthredirect(req, res) {
-        this.authService.googleAuthRedirect(req.user, res);
-    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -61,25 +50,6 @@ __decorate([
     __metadata("design:paramtypes", [loginDto_1.LoginDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
-__decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Login Google' }),
-    (0, common_1.Post)('auth/google'),
-    openapi.ApiResponse({ status: 201 }),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "signinWithGoogle", null);
-__decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Redirect' }),
-    (0, common_1.Post)('oauth/google/redirect'),
-    openapi.ApiResponse({ status: 201 }),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "googleOAuthredirect", null);
 exports.AuthController = AuthController = __decorate([
     (0, swagger_1.ApiTags)('auth'),
     (0, common_1.Controller)('auth'),

@@ -32,6 +32,7 @@ import { GoogleModule } from './google/google.module';
     StripeModule,
     ReviewsModule,
     CarpiBotModule,
+    GoogleModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_KEY_SECRET,
@@ -39,7 +40,6 @@ import { GoogleModule } from './google/google.module';
         expiresIn: '1h',
       }
     }),
-    GoogleModule
   ],
   controllers: [],
   providers: [],
