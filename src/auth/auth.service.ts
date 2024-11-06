@@ -6,14 +6,18 @@ import { User } from "src/entities/users.entity";
 import { Role } from "src/utils/user.enum";
 import { UserGoogleDto } from "src/dtos/userGoogleDto";
 import { transporter } from "src/config/mailer";
+import { OAuth2Client } from "google-auth-library";
 
 @Injectable()
 export class AuthService {
     private userId: string;
     private readonly SALT_ROUNDS = 10;
+    private client: OAuth2Client;
     constructor(
         private readonly userRepository: UserRepository,
-        private readonly jwtService: JwtService){}
+        private readonly jwtService: JwtService){
+          this.client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        }
     
     async signUp(user:Partial<User>) {
         const {email, password} = user;
@@ -79,31 +83,56 @@ export class AuthService {
     }
   }
 
-  async googleAuthRedirect(user: UserGoogleDto, res: any) {
-    if (!user) return new NotFoundException('User google account not found');
-    this.userId = (await this.userRepository.getUserByEmail(user.email))?.id;
-    if (!this.userId)
-      this.userId = (await this.userRepository.createUser(user)).id;
+  // async googleAuthRedirect(user: UserGoogleDto, res: any) {
+  //   if (!user) return new NotFoundException('User google account not found');
+  //   this.userId = (await this.userRepository.getUserByEmail(user.email))?.id;
+  //   if (!this.userId)
+  //     this.userId = (await this.userRepository.createUser(user)).id;
 
-    const refreshToken = await this.generateRefreshToken(this.userId);
-    const accessToken = await this.generateAccessToken(this.userId);
-    const hashedRefreshToken = await bcrypt.hash(
-      refreshToken,
-      this.SALT_ROUNDS,
-    );
+  //   const refreshToken = await this.generateRefreshToken(this.userId);
+  //   const accessToken = await this.generateAccessToken(this.userId);
+  //   const hashedRefreshToken = await bcrypt.hash(
+  //     refreshToken,
+  //     this.SALT_ROUNDS,
+  //   );
 
-    await this.userRepository.updateRefreshToken(this.userId, hashedRefreshToken);
-    res.cookie('token', refreshToken, {
-      maxAge: 3 * 24 * 60 * 60,
-      httpOnly: true,
-    });
-    res.json({
-      status: 'success',
-      message: 'Login successfully',
-      data: {
-        accessToken: accessToken,
-      },
-    });
+  //   await this.userRepository.updateRefreshToken(this.userId, hashedRefreshToken);
+  //   res.cookie('token', refreshToken, {
+  //     maxAge: 3 * 24 * 60 * 60,
+  //     httpOnly: true,
+  //   });
+  //   res.json({
+  //     status: 'success',
+  //     message: 'Login successfully',
+  //     data: {
+  //       accessToken: accessToken,
+  //     },
+  //   });
+  async googleAuthRedirect(token: string, res: any) { 
+    const ticket = await this.client.verifyIdToken({ idToken: token, audience: process.env.GOOGLE_CLIENT_ID, }); 
+    const payload = ticket.getPayload(); 
+    if (!payload) { throw new NotFoundException('Google account not found'); } 
+    const user = { 
+      email: payload.email, 
+      name: payload.name,
+    }; 
+    
+    this.userId = (await this.userRepository.getUserByEmail(user.email))?.id; 
+    if (!this.userId) { 
+      this.userId = (await this.userRepository.createUser(user)).id; } 
+      const refreshToken = await this.generateRefreshToken(this.userId); 
+      const accessToken = await this.generateAccessToken(this.userId); 
+      const hashedRefreshToken = await bcrypt.hash(refreshToken, this.SALT_ROUNDS); 
+      await this.userRepository.updateRefreshToken(this.userId, hashedRefreshToken); 
+      res.cookie('token', 
+        refreshToken, { 
+          maxAge: 3 * 24 * 60 * 60 * 1000, 
+          httpOnly: true, }); 
+      res.json({ 
+        status: 'success', 
+        message: 'Login successfully', 
+        data: { accessToken: accessToken, }, 
+      });; 
 
     await transporter.sendMail({
       from: '"Iniciaste Sesión en CheCasa 👌" <che.casa.proyect@gmail.com>',
