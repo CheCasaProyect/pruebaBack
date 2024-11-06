@@ -81,7 +81,7 @@ let CarpibotService = class CarpibotService {
         };
     }
     getMenu() {
-        return Object.entries(this.menu).map(([key, text]) => ({ id: key, text }));
+        return this.menu;
     }
     getInitialOptions(optionId) {
         const subMenu = this.initialOptions[optionId];
@@ -101,7 +101,10 @@ let CarpibotService = class CarpibotService {
         const chat = this.carpibotRepository.create(carpiBotDto);
         return this.carpibotRepository.save(chat);
     }
-    getAllChat() { }
+    getAllChat() {
+        const allChat = this.carpibotRepository.find();
+        return allChat;
+    }
 };
 exports.CarpibotService = CarpibotService;
 exports.CarpibotService = CarpibotService = __decorate([

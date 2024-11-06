@@ -21,7 +21,7 @@ let CarpiBot = class CarpiBot {
 };
 exports.CarpiBot = CarpiBot;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], CarpiBot.prototype, "id", void 0);
 __decorate([

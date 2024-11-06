@@ -13,7 +13,7 @@ import { ApiProperty } from '@nestjs/swagger';
   name: 'carpiBot',
 })
 export class CarpiBot {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id?: string;
 
   @Column()
@@ -31,7 +31,7 @@ export class CarpiBot {
   @ManyToOne(() => User, (user) => user.reviews)
   @JoinColumn({ name: 'userId' })
   @ApiProperty()
-  userId: string;
+  userId:string;
 
   @CreateDateColumn({ name: 'created_at' })
   @ApiProperty({

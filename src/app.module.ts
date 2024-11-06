@@ -12,6 +12,7 @@ import { StripeModule } from './stripe/stripe.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { CarpiBotModule } from './chatbot/carpibot.module';
 import { JwtModule } from '@nestjs/jwt';
+import { GoogleModule } from './google/google.module';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { JwtModule } from '@nestjs/jwt';
       signOptions: {
         expiresIn: '1h',
       }
-    })
+    }),
+    GoogleModule
   ],
   controllers: [],
   providers: [],

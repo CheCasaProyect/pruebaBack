@@ -10,14 +10,11 @@ export declare class CarpibotService {
     private initialOptions;
     private response;
     getMenu(): {
-        id: string;
-        text: {
-            id: number;
-            text: string;
-        };
+        id: number;
+        text: string;
     }[];
     getInitialOptions(optionId: string): any;
     getResponse(optionId: string): any;
     saveChat(carpiBotDto: CarpiBotDto): Promise<CarpiBot>;
-    getAllChat(): void;
+    getAllChat(): Promise<CarpiBot[]>;
 }
